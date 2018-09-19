@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baozun.dao.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.baozun.dao.entity.Student">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SNAME" jdbcType="VARCHAR" property="sname" />
+    <result column="SAGE" jdbcType="VARCHAR" property="sage" />
+    <result column="SEX" jdbcType="INTEGER" property="sex" />
+    <result column="TENANT_COUNTRY" jdbcType="VARCHAR" property="tenantCountry" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SNAME, SAGE, SEX, TENANT_COUNTRY
+  </sql>
+  <sql id="student_query_fuzzy_condition">
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="sname != null and sname.trim().length() != 0">
+         AND (SNAME like concat('%',#{sname},'%')) 
+      </if>
+      <if test="sage != null and sage.trim().length() != 0">
+         AND (SAGE like concat('%',#{sage},'%')) 
+      </if>
+      <if test="sex != null">
+        AND (SEX = #{sex})
+      </if>
+      <if test="tenantCountry != null and tenantCountry.trim().length() != 0">
+         AND (TENANT_COUNTRY like concat('%',#{tenantCountry},'%')) 
+      </if>
+    </trim>
+  </sql>
+  <sql id="student_query_condition">
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="sname != null and sname.trim().length() != 0">
+        AND (SNAME = #{sname})
+      </if>
+      <if test="sage != null and sage.trim().length() != 0">
+        AND (SAGE = #{sage})
+      </if>
+      <if test="sex != null">
+        AND (SEX = #{sex})
+      </if>
+      <if test="tenantCountry != null and tenantCountry.trim().length() != 0">
+        AND (TENANT_COUNTRY = #{tenantCountry})
+      </if>
+    </trim>
+  </sql>
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from student 
+    <if test="fuzzy">
+      <include refid="student_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy">
+      <include refid="student_query_condition" />
+    </if>
+    <if test="order and orderStr == null">
+      order by CREATE_TIME desc
+    </if>
+    <if test="order and orderStr != null and orderStr.trim().length() != 0">
+      order by ${orderStr}
+    </if>
+  </select>
+  <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true">
+    insert into student ( 
+    ID,SNAME,SAGE,SEX,TENANT_COUNTRY ) values 
+    <foreach collection="list" index="index" item="item" separator=",">
+       ( #{item.id,jdbcType=INTEGER},#{item.sname,jdbcType=VARCHAR},#{item.sage,jdbcType=VARCHAR},#{item.sex,jdbcType=INTEGER},#{item.tenantCountry,jdbcType=VARCHAR} ) 
+    </foreach>
+  </insert>
+  <select id="count" resultType="int">
+    select count(*) from student 
+    <if test="fuzzy">
+      <include refid="student_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy">
+      <include refid="student_query_condition" />
+    </if>
+  </select>
+  <select id="selectSysDate" resultType="java.util.Date">
+     SELECT NOW() 
+  </select>
+  <insert id="save" parameterType="com.baozun.dao.entity.Student" useGeneratedKeys="true">
+    insert into student (
+    ID,SNAME,SAGE,SEX,TENANT_COUNTRY ) values
+      ( #{id,jdbcType=INTEGER},#{sname,jdbcType=VARCHAR},#{sage,jdbcType=VARCHAR},#{sex,jdbcType=INTEGER},#{tenantCountry,jdbcType=VARCHAR} )
+  </insert>
+  <select id="queryStudent" parameterType="com.baozun.dao.entity.Student" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+     from student 
+     where SAGE &gt;=12
+  </select>
+</mapper>

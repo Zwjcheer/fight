@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fight-admin-dao-0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/fight-admin-dao/target/fight-admin-dao-0.0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

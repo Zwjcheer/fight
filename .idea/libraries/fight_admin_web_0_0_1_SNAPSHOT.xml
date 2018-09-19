@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fight-admin-web-0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/fight-admin-web/target/fight-admin-web-0.0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
