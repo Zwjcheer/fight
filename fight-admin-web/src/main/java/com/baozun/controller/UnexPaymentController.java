@@ -54,7 +54,7 @@ public class UnexPaymentController {
         //邮件主题
         smm.setSubject("Hello");
         //邮件内容
-        smm.setText("杨胜文，你们周五什么时候去？");
+        smm.setText("杨胜文，你们周五什么时候去xxxxxx？");
         //接受邮件
         smm.setTo("shengwen.yang@baozun.com");
         try {
