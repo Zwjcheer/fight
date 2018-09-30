@@ -37,8 +37,6 @@ public class RedisController {
         ResultResponse resultResponse = new ResultResponse();
         redisTemplate.opsForValue().set("save", "国庆", 30 * 60, TimeUnit.SECONDS);
         String value = redisTemplate.opsForValue().get("save");
-        //set("save", "国庆");
-        //resultResponse.setData(value);
         resultResponse.setData(value);
         return resultResponse;
     }
